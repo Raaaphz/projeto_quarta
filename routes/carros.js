@@ -1,11 +1,23 @@
 const express = require("express");
 const router = express.Router();
 
-const controller = require("../controllers/carrosController");
+const carrosController = require("../controllers/carrosController");
 
-router.get("/visualizarcarro", controller.get);
-router.post('/cadastarcarro',controller.post);
-router.delete('/deletarcarro/:placa', controller.delete);
-router.put('/updatecarro/:placa', controller.put);
+router.get("/visualizarcarro", carrosController.get);
+router.post('/cadastarcarro',carrosController.post);
+router.delete('/deletarcarro/:placa', carrosController.delete);
+router.put('/updatecarro/:placa', carrosController.put);
+
+import {
+    getPorPlaca,
+    getPorCor,
+    getPorModelo,
+    getPorMarca
+} from ('../controllers/getCarrosEspecificadosController');
+
+router.get('/carroporplaca', getPorPlaca);
+router.get('/carroporcor', getPorCor);
+router.get('/carropormodelo', getPorModelo);
+router.get('/carropormarca', getPorMarca);
 
 module.exports = router;

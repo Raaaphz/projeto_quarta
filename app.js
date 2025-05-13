@@ -8,9 +8,11 @@ const PORT = 8080;
 // Middleware para interpretar JSON
 app.use(express.json());
 
-const carrosRoute = require('./routes/carros')
+const carrosRoute = require('./routes/carros');
+const donosRoute = require('./routes/donos');
 
 app.use("/carros", carrosRoute );
+app.use("/donos", donosRoute);
 
 //configurando servidor
 app.listen(PORT, () => {
