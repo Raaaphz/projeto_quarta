@@ -42,7 +42,7 @@ function validarCPF(cpf) {
 module.exports={
     get : async(req, res) => {
         try{
-            const query = 'SELECT idDono, nome, nascimento, logradouro, bairro, cep, cpf, placa FROM clientes'
+            const query = 'SELECT idDono, nome, nascimento, logradouro, bairro, cep, cpf FROM clientes'
             const [rows] = await conexao.execute(query);
 
             res.status(200).json(rows);
@@ -54,8 +54,6 @@ module.exports={
 
     post: async (req, res) => {
         const { nome, nascimento, logradouro, bairro, cep, cpf } = req.body;
-        let { placa } = req.params;
-        placa = placa.toUpperCase();
 
         // Validação do CPF
         if (!validarCPF(cpf)) {
@@ -70,15 +68,9 @@ module.exports={
                 return res.status(400).json({error: 'CPF ja cadastrado'});
             }
 
-            // Verificar se a placa existe antes de inserir
-            const [carro] = await conexao.execute('SELECT * FROM carros WHERE placa = ?', [placa]);
-            if (carro.length === 0) {
-                return res.status(404).json({ error: 'Placa não encontrada' });
-            }
-
-            // Inserir dados do dono
-            const insert = 'INSERT INTO clientes (nome, nascimento, logradouro, bairro, cep, cpf, placa) VALUES (?, ?, ?, ?, ?, ?, ?)';
-            await conexao.execute(insert, [nome, nascimento, logradouro, bairro, cep, cpf, placa]);
+            // Inserir dados do cliente
+            const insert = 'INSERT INTO clientes (nome, nascimento, logradouro, bairro, cep, cpf) VALUES (?, ?, ?, ?, ?, ?)';
+            await conexao.execute(insert, [nome, nascimento, logradouro, bairro, cep, cpf]);
 
             res.status(201).json({ message: 'Cliente cadastrado com sucesso' });
 

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const donosController = require("../controllers/clientesController");
+const clientesController = require("../controllers/clientesController");
 
-router.get("/visualizardonos", donosController.get);
-router.post('/cadastrardono/:placa', donosController.post);
-router.delete('/deletardono/:cpf', donosController.delete);
-router.put('/updatedono/:cpf', donosController.put);
+router.get("/visualizarclientes", clientesController.get);
+router.post('/cadastrarclientes/:placa', clientesController.post);
+router.delete('/deletarclientes/:cpf', clientesController.delete);
+router.put('/updateclientes/:cpf', clientesController.put);
 
 import {
     getPorCPF,
@@ -14,8 +14,7 @@ import {
     getPorPlaca
 } from '../controllers/getClientesEspecificadoController';
 
-router.get('/donoporcpf', getPorCPF);
-router.get('/donopornome', getPorNome);
-router.get('/donoporplaca', getPorPlaca);
+router.get('/clienteporcpf', getPorCPF);
+router.get('/clientepornome', getPorNome);
 
 module.exports = router;
