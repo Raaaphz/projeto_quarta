@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-import {
-    compraCarro,
+const {
     vendaCarro
-} from ('../controllers/vendaController')
+} = require ('../controllers/vendaController')
 
 router.get('/venda/:placa', vendaCarro);
 

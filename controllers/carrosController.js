@@ -4,7 +4,7 @@ module.exports = {
 
     get : async(req, res) => {
         try{
-            const query = 'SELECT idCarro, marca, modelo, ano, cor, valor, placa FROM carros';
+            const query = 'SELECT * FROM carros';
             const [rows] = await conexao.execute(query);
 
             res.status(200).json(rows);
@@ -16,6 +16,7 @@ module.exports = {
 
     post : async(req, res) =>{
         const {marca, modelo, ano, cor, valor, placa} = req.body;
+        const {vendido} = 'n'
         
         const placaNormalizada = placa.toUpperCase();
         try{
@@ -25,8 +26,8 @@ module.exports = {
             if (PlacaExistente.length > 0) {
                 return res.status(400).json({ error: 'Placa já cadastrada' });
             }            
-            const insert = 'INSERT INTO carros (marca, modelo, ano, placa, cor, valor) VALUES (?,?,?,?,?)';
-            await conexao.execute(insert, [marca, modelo, ano, placaNormalizada, cor, valor]);            
+            const insert = 'INSERT INTO carros (marca, modelo, ano, placa, cor, valor, vendido) VALUES (?,?,?,?,?,?)';
+            await conexao.execute(insert, [marca, modelo, ano, placaNormalizada, cor, valor, vendido]);            
             res.status(201).json({message:'Carro cadastrado com sucesso'});
         } catch (error) {
             console.error('Erro ao cadastrar carro:', error);

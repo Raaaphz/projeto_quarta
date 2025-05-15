@@ -8,11 +8,10 @@ router.post('/cadastrarclientes/:placa', clientesController.post);
 router.delete('/deletarclientes/:cpf', clientesController.delete);
 router.put('/updateclientes/:cpf', clientesController.put);
 
-import {
+const {
     getPorCPF,
     getPorNome,
-    getPorPlaca
-} from '../controllers/getClientesEspecificadoController';
+} = require ('../controllers/getClientesEspecificadoController');
 
 router.get('/clienteporcpf', getPorCPF);
 router.get('/clientepornome', getPorNome);

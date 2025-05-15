@@ -1,6 +1,6 @@
 const conexao = require ('../db');
 
-export const getPorCPF = async(req, res) =>{
+const getPorCPF = async(req, res) =>{
     const {cpf} = req.params;
 
     try{
@@ -14,7 +14,7 @@ export const getPorCPF = async(req, res) =>{
     }
 }
 
-export const getPorNome = async(req, res) =>{
+const getPorNome = async(req, res) =>{
     const {nome} = req.params;
 
     try{
@@ -26,4 +26,9 @@ export const getPorNome = async(req, res) =>{
         console.error('Erro ao buscar cliente: ',error);
         res.status(500).json({error: 'Erro ao buscar cliente'});
     }
+}
+
+module.exports = {
+    getPorCPF,
+    getPorNome
 }

@@ -1,6 +1,6 @@
 const conexao = require ('../db');
 
-export const getPorPlaca = async(req, res) =>{
+const getPorPlaca = async(req, res) =>{
     const {placa} = req.params;
 
     try{
@@ -14,7 +14,7 @@ export const getPorPlaca = async(req, res) =>{
     }
 }
 
-export const getPorModelo = async(req, res) =>{
+const getPorModelo = async(req, res) =>{
     const {modelo} = req.params;
 
     try{
@@ -28,7 +28,7 @@ export const getPorModelo = async(req, res) =>{
     }
 }
 
-export const getPorMarca = async(req, res)=>{
+const getPorMarca = async(req, res)=>{
     const {marca} = req.params;
     
     try{
@@ -42,7 +42,7 @@ export const getPorMarca = async(req, res)=>{
     }
 }
 
-export const getPorCor = async(req, res) =>{
+const getPorCor = async(req, res) =>{
     const {cor} = req.params;
 
     try{
@@ -56,7 +56,7 @@ export const getPorCor = async(req, res) =>{
     }
 }
 
-export const getPorValor = async(req, res) =>{
+const getPorValor = async(req, res) =>{
     const{valor} = req.params;
 
     try{
@@ -69,3 +69,25 @@ export const getPorValor = async(req, res) =>{
         res.status(500).json({error: 'Erro ao buscar carro'});
     }
 }
+
+const getVendidos = async(req, res) =>{
+    const{vendido} = req.params;
+
+    try{
+        const getQuery = 'SELECT * FROM carros WHERE vendido = ?'
+        const [rows] = await conexao.execute(getQuery, [vendido]);
+
+        res.status(200).json(rows)
+    } catch(error) {
+        console.error('Erro ao buscar carro: ', error);
+        res.status(500).json({error: 'Erro ao buscar carro'})
+    }
+}
+
+module.exports = { 
+    getPorCor, 
+    getPorMarca, 
+    getPorModelo, 
+    getPorPlaca, 
+    getPorValor, 
+    getVendidos }

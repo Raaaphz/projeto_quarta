@@ -8,16 +8,18 @@ router.post('/cadastarcarro',carrosController.post);
 router.delete('/deletarcarro/:placa', carrosController.delete);
 router.put('/updatecarro/:placa', carrosController.put);
 
-import {
+const {
     getPorPlaca,
     getPorCor,
     getPorModelo,
-    getPorMarca
-} from ('../controllers/getCarrosEspecificadosController');
+    getPorMarca,
+    getPorValor
+} = require ('../controllers/getCarrosEspecificadosController');
 
 router.get('/carroporplaca', getPorPlaca);
 router.get('/carroporcor', getPorCor);
 router.get('/carropormodelo', getPorModelo);
 router.get('/carropormarca', getPorMarca);
+router.get('/carroporvalor', getPorValor);
 
 module.exports = router;
