@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const donosController = require("../controllers/donosController");
+const donosController = require("../controllers/clientesController");
 
 router.get("/visualizardonos", donosController.get);
 router.post('/cadastrardono/:placa', donosController.post);
@@ -12,7 +12,7 @@ import {
     getPorCPF,
     getPorNome,
     getPorPlaca
-} from '../controllers/getDonosEspecificadoController';
+} from '../controllers/getClientesEspecificadoController';
 
 router.get('/donoporcpf', getPorCPF);
 router.get('/donopornome', getPorNome);

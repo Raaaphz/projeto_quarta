@@ -55,3 +55,17 @@ export const getPorCor = async(req, res) =>{
         res.status(500).json({error: 'Erro ao buscar carro'});
     }
 }
+
+export const getPorValor = async(req, res) =>{
+    const{valor} = req.params;
+
+    try{
+        const getQuery = 'SELECT * FROM carros WHERE valor = ?'
+        const [rows] = await conexao.execute(getQuery, [valor]);
+
+        res.status(200).json(rows);
+    } catch(error){
+        console.error('Erro ao buscar carro: ', error);
+        res.status(500).json({error: 'Erro ao buscar carro'});
+    }
+}

@@ -42,13 +42,13 @@ function validarCPF(cpf) {
 module.exports={
     get : async(req, res) => {
         try{
-            const query = 'SELECT idDono, nome, nascimento, logradouro, bairro, cep, cpf, placa FROM donos'
+            const query = 'SELECT idDono, nome, nascimento, logradouro, bairro, cep, cpf, placa FROM clientes'
             const [rows] = await conexao.execute(query);
 
             res.status(200).json(rows);
         } catch(error){
-            console.error('Erro ao buscar donos: ',error);
-            res.status(500).json({error: 'Erro ao buscar donos'});
+            console.error('Erro ao buscar clientes: ',error);
+            res.status(500).json({error: 'Erro ao buscar clientes'});
         }
     },
 
@@ -63,7 +63,7 @@ module.exports={
         }
 
         try {
-            const checkCPFquery = 'SELECT * FROM donos WHERE cpf = ?';
+            const checkCPFquery = 'SELECT * FROM clientes WHERE cpf = ?';
             const [CPFExistente] = await conexao.execute(checkCPFquery, [cpf]);
 
             if(CPFExistente.length > 0) {
@@ -77,14 +77,14 @@ module.exports={
             }
 
             // Inserir dados do dono
-            const insert = 'INSERT INTO donos (nome, nascimento, logradouro, bairro, cep, cpf, placa) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            const insert = 'INSERT INTO clientes (nome, nascimento, logradouro, bairro, cep, cpf, placa) VALUES (?, ?, ?, ?, ?, ?, ?)';
             await conexao.execute(insert, [nome, nascimento, logradouro, bairro, cep, cpf, placa]);
 
-            res.status(201).json({ message: 'Dono cadastrado com sucesso' });
+            res.status(201).json({ message: 'Cliente cadastrado com sucesso' });
 
         } catch (error) {
-            console.error('Erro ao cadastrar dono:', error);
-            res.status(500).json({ error: 'Erro ao cadastrar dono' });
+            console.error('Erro ao cadastrar cliente:', error);
+            res.status(500).json({ error: 'Erro ao cadastrar cliente' });
         }
     },
 
@@ -92,17 +92,17 @@ module.exports={
         const { cpf } = req.params;
 
         try{
-            const deleteQuery = 'DELETE FROM donos WHERE cpf = ?';
+            const deleteQuery = 'DELETE FROM clientes WHERE cpf = ?';
             const [result] = await conexao.execute(deleteQuery, [cpf]);
 
             if(result.affectedRows === 0) {
-                return res.status(404).json({ error: 'Dono não encontrado' });
+                return res.status(404).json({ error: 'Cliente não encontrado' });
             }
 
-            res.status(200).json({ message: 'Dono deletado com sucesso' });
+            res.status(200).json({ message: 'Cliente deletado com sucesso' });
         } catch (error) {
-            console.error('Erro ao deletar dono:', error);
-            res.status(500).json({ error: 'Erro ao deletar dono' });
+            console.error('Erro ao deletar cliente:', error);
+            res.status(500).json({ error: 'Erro ao deletar cliente' });
         }
     },
 
@@ -111,17 +111,17 @@ module.exports={
         const { nome, nascimento, logradouro, bairro, cep } = req.body;
 
         try {
-            const updateQuery = 'UPDATE donos SET nome = ?, nascimento = ?, logradouro = ?, bairro = ?, cep = ? WHERE cpf = ?';
+            const updateQuery = 'UPDATE clientes SET nome = ?, nascimento = ?, logradouro = ?, bairro = ?, cep = ? WHERE cpf = ?';
             const [result] = await conexao.execute(updateQuery, [nome, nascimento, logradouro, bairro, cep, cpf]);
 
             if (result.affectedRows === 0) {
-                return res.status(404).json({ error: 'Dono não encontrado' });
+                return res.status(404).json({ error: 'Cliente não encontrado' });
             }
 
-            res.status(200).json({ message: 'Dono atualizado com sucesso' });
+            res.status(200).json({ message: 'Cliente atualizado com sucesso' });
         } catch (error) {
-            console.error('Erro ao atualizar dono:', error);
-            res.status(500).json({ error: 'Erro ao atualizar dono' });
+            console.error('Erro ao atualizar cliente:', error);
+            res.status(500).json({ error: 'Erro ao atualizar cliente' });
         }
     }
 }

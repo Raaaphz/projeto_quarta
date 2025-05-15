@@ -4,7 +4,7 @@ module.exports = {
 
     get : async(req, res) => {
         try{
-            const query = 'SELECT idCarro, marca, modelo, ano, placa, cor FROM carros';
+            const query = 'SELECT idCarro, marca, modelo, ano, cor, valor, placa FROM carros';
             const [rows] = await conexao.execute(query);
 
             res.status(200).json(rows);
@@ -15,7 +15,7 @@ module.exports = {
     },
 
     post : async(req, res) =>{
-        const {marca, modelo, ano, placa, cor} = req.body;
+        const {marca, modelo, ano, cor, valor, placa} = req.body;
         
         const placaNormalizada = placa.toUpperCase();
         try{
@@ -25,8 +25,8 @@ module.exports = {
             if (PlacaExistente.length > 0) {
                 return res.status(400).json({ error: 'Placa já cadastrada' });
             }            
-            const insert = 'INSERT INTO carros (marca, modelo, ano, placa, cor) VALUES (?,?,?,?)';
-            await conexao.execute(insert, [marca, modelo, ano, placaNormalizada, cor]);            
+            const insert = 'INSERT INTO carros (marca, modelo, ano, placa, cor, valor) VALUES (?,?,?,?,?)';
+            await conexao.execute(insert, [marca, modelo, ano, placaNormalizada, cor, valor]);            
             res.status(201).json({message:'Carro cadastrado com sucesso'});
         } catch (error) {
             console.error('Erro ao cadastrar carro:', error);
@@ -56,11 +56,11 @@ module.exports = {
     put: async (req, res) => {
         let { placa } = req.params;
         placa = placa.toUpperCase();
-        const { marca, modelo, ano, cor } = req.body;
+        const { marca, modelo, ano, cor, valor } = req.body;
 
         try {
-            const query = 'UPDATE carros SET marca = ?, modelo = ?, ano = ?, cor = ? WHERE UPPER(placa) = ?';
-            const params = [marca, modelo, ano, cor, placa];
+            const query = 'UPDATE carros SET marca = ?, modelo = ?, ano = ?, cor = ?, valor = ? WHERE UPPER(placa) = ?';
+            const params = [marca, modelo, ano, cor, valor];
 
             const [result] = await conexao.execute(query, params);
 
