@@ -2,7 +2,7 @@ const conexao = require ('../db');
 
 const vendaCarro = async(req, res) =>{
     const { valor, diavenda, cpf} = req.body;
-    const { vendido } = 's'
+    const  vendido  = 's'
     const { placa } = req.params;
     placa = placa.toUpperCase(); 
 

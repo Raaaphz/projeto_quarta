@@ -14,24 +14,27 @@ module.exports = {
         }
     },
 
-    post : async(req, res) =>{
-        const {marca, modelo, ano, cor, valor, placa} = req.body;
-        const {vendido} = 'n'
-        
+    post: async (req, res) => {
+        const { marca, modelo, ano, cor, valor, placa } = req.body;
+        const vendido = 'n'; // <- corrigido
+
         const placaNormalizada = placa.toUpperCase();
-        try{
-            const checkPlacaQuery = 'SELECT * FROM carros WHERE placa =?';
+
+        try {
+            const checkPlacaQuery = 'SELECT * FROM carros WHERE placa = ?';
             const [PlacaExistente] = await conexao.execute(checkPlacaQuery, [placaNormalizada]);
-            
+
             if (PlacaExistente.length > 0) {
                 return res.status(400).json({ error: 'Placa já cadastrada' });
-            }            
-            const insert = 'INSERT INTO carros (marca, modelo, ano, placa, cor, valor, vendido) VALUES (?,?,?,?,?,?)';
-            await conexao.execute(insert, [marca, modelo, ano, placaNormalizada, cor, valor, vendido]);            
-            res.status(201).json({message:'Carro cadastrado com sucesso'});
+            }
+
+            const insert = 'INSERT INTO carros (marca, modelo, ano, placa, cor, valor, vendido) VALUES (?,?,?,?,?,?,?)';
+            await conexao.execute(insert, [marca, modelo, ano, placaNormalizada, cor, valor, vendido]);
+
+            res.status(201).json({ message: 'Carro cadastrado com sucesso' });
         } catch (error) {
             console.error('Erro ao cadastrar carro:', error);
-            res.status(500).json({error: 'erro ao cadastrar carro'});
+            res.status(500).json({ error: 'Erro ao cadastrar carro' });
         }
     },
 

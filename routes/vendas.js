@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
     vendaCarro
-} = require ('../controllers/vendaController')
+} = require ('../controllers/vendasController')
 
 router.get('/venda/:placa', vendaCarro);
 

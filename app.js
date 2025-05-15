@@ -9,12 +9,12 @@ const PORT = 8080;
 app.use(express.json());
 
 const carrosRoute = require('./routes/carros');
-const donosRoute = require('./routes/clientes');
-const vendaRoute = require('./routes/venda');
+const clientesRoute = require('./routes/clientes');
+const vendasRoute = require('./routes/vendas');
 
 app.use("/carros", carrosRoute );
-app.use("/donos", donosRoute);
-app.use("/venda", vendaRoute);
+app.use("/clientes", clientesRoute);
+app.use("/vendas", vendasRoute);
 
 //configurando servidor
 app.listen(PORT, () => {

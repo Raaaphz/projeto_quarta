@@ -4,7 +4,7 @@ const router = express.Router();
 const clientesController = require("../controllers/clientesController");
 
 router.get("/visualizarclientes", clientesController.get);
-router.post('/cadastrarclientes/:placa', clientesController.post);
+router.post('/cadastrarclientes/', clientesController.post);
 router.delete('/deletarclientes/:cpf', clientesController.delete);
 router.put('/updateclientes/:cpf', clientesController.put);
 

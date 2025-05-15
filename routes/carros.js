@@ -4,7 +4,7 @@ const router = express.Router();
 const carrosController = require("../controllers/carrosController");
 
 router.get("/visualizarcarro", carrosController.get);
-router.post('/cadastarcarro',carrosController.post);
+router.post('/cadastrarcarro',carrosController.post);
 router.delete('/deletarcarro/:placa', carrosController.delete);
 router.put('/updatecarro/:placa', carrosController.put);
 
