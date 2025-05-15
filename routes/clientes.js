@@ -13,7 +13,7 @@ const {
     getPorNome,
 } = require ('../controllers/getClientesEspecificadoController');
 
-router.get('/clienteporcpf', getPorCPF);
-router.get('/clientepornome', getPorNome);
+router.get('/clienteporcpf/:cpf', getPorCPF);
+router.get('/clientepornome/:nome', getPorNome);
 
 module.exports = router;

@@ -16,7 +16,7 @@ module.exports = {
 
     post: async (req, res) => {
         const { marca, modelo, ano, cor, valor, placa } = req.body;
-        const vendido = 'n'; // <- corrigido
+        const vendido = 'N';
 
         const placaNormalizada = placa.toUpperCase();
 
