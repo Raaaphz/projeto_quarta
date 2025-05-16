@@ -53,7 +53,10 @@ module.exports={
     },
 
     post: async (req, res) => {
-        const { nome, nascimento, logradouro, bairro, cep, cpf } = req.body;
+        let { nome, nascimento, logradouro, bairro, cep, cpf } = req.body;
+
+        // Converter o nome para letras minúsculas
+        nome = nome.toLowerCase();
 
         // Validação do CPF
         if (!validarCPF(cpf)) {
@@ -64,8 +67,8 @@ module.exports={
             const checkCPFquery = 'SELECT * FROM clientes WHERE cpf = ?';
             const [CPFExistente] = await conexao.execute(checkCPFquery, [cpf]);
 
-            if(CPFExistente.length > 0) {
-                return res.status(400).json({error: 'CPF ja cadastrado'});
+            if (CPFExistente.length > 0) {
+                return res.status(400).json({ error: 'CPF ja cadastrado' });
             }
 
             // Inserir dados do cliente
@@ -79,6 +82,7 @@ module.exports={
             res.status(500).json({ error: 'Erro ao cadastrar cliente' });
         }
     },
+
 
     delete : async (req, res) => {
         const { cpf } = req.params;

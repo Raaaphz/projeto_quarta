@@ -13,7 +13,8 @@ const {
     getPorCor,
     getPorModelo,
     getPorMarca,
-    getPorValor
+    getPorValor,
+    getVendidos
 } = require ('../controllers/getCarrosEspecificadosController');
 
 router.get('/carroporplaca/:placa', getPorPlaca);
@@ -21,5 +22,6 @@ router.get('/carroporcor/:cor', getPorCor);
 router.get('/carropormodelo/:modelo', getPorModelo);
 router.get('/carropormarca/:marca', getPorMarca);
 router.get('/carroporvalor/:valor', getPorValor);
+router.get('/carrovendido/:vendido', getVendidos);
 
 module.exports = router;
