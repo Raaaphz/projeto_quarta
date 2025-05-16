@@ -42,7 +42,7 @@ function validarCPF(cpf) {
 module.exports={
     get : async(req, res) => {
         try{
-            const query = 'SELECT idDono, nome, nascimento, logradouro, bairro, cep, cpf FROM clientes'
+            const query = 'SELECT * FROM clientes'
             const [rows] = await conexao.execute(query);
 
             res.status(200).json(rows);
@@ -53,7 +53,7 @@ module.exports={
     },
 
     post: async (req, res) => {
-        let { nome, nascimento, logradouro, bairro, cep, cpf } = req.body;
+        let { nome, sobrenome, nascimento, logradouro, bairro, cep, cpf } = req.body;
 
         // Converter o nome para letras minúsculas
         nome = nome.toLowerCase();
@@ -72,8 +72,8 @@ module.exports={
             }
 
             // Inserir dados do cliente
-            const insert = 'INSERT INTO clientes (nome, nascimento, logradouro, bairro, cep, cpf) VALUES (?, ?, ?, ?, ?, ?)';
-            await conexao.execute(insert, [nome, nascimento, logradouro, bairro, cep, cpf]);
+            const insert = 'INSERT INTO clientes (nome, sobrenome, nascimento, logradouro, bairro, cep, cpf) VALUES (?, ?, ?, ?, ?, ?, ?)';
+            await conexao.execute(insert, [nome, sobrenome, nascimento, logradouro, bairro, cep, cpf]);
 
             res.status(201).json({ message: 'Cliente cadastrado com sucesso' });
 
@@ -104,11 +104,11 @@ module.exports={
 
     put : async (req, res) => {
         const { cpf } = req.params;
-        const { nome, nascimento, logradouro, bairro, cep } = req.body;
+        const { nome, sobrenome, nascimento, logradouro, bairro, cep } = req.body;
 
         try {
-            const updateQuery = 'UPDATE clientes SET nome = ?, nascimento = ?, logradouro = ?, bairro = ?, cep = ? WHERE cpf = ?';
-            const [result] = await conexao.execute(updateQuery, [nome, nascimento, logradouro, bairro, cep, cpf]);
+            const updateQuery = 'UPDATE clientes SET nome = ?, sobrenome = ?, nascimento = ?, logradouro = ?, bairro = ?, cep = ? WHERE cpf = ?';
+            const [result] = await conexao.execute(updateQuery, [nome, sobrenome, nascimento, logradouro, bairro, cep, cpf]);
 
             if (result.affectedRows === 0) {
                 return res.status(404).json({ error: 'Cliente não encontrado' });

@@ -13,6 +13,6 @@ router.post('/venda/:placa', vendaCarro);
 router.get('/visualizarvenda', getVenda);
 router.get('/vendapordia/:diavenda', vendaPorDia);
 router.delete('/deletarvenda/:idvenda', deletarVendas);
-router.put('atualizarvenda/:idvenda', updateVendas);
+router.put('/atualizarvenda/:idvenda', updateVendas);
 
 module.exports = router;

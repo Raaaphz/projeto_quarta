@@ -94,7 +94,7 @@ const updateVendas = async (req, res) => {
     const {valor, diavenda, cpf, placa} = req.body;
     try{
         const query = 'UPDATE vendas SET valor = ?, diavenda = ?, cpf = ?, placa = ? WHERE idvenda = ?'
-        const params = [valor, diavenda, cpf, placa];
+        const params = [valor, diavenda, cpf, placa, idvenda];
 
         const [result] = await conexao.execute(query, params);
 
