@@ -57,7 +57,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
    DB_HOST=localhost
    DB_USER=seu_usuario
    DB_PASS=sua_senha
-   PORT=3000
+   PORT=8080
    ```
 
 4. **Execute** o servidor:
@@ -66,7 +66,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
    npm start      # ou yarn start
    ```
 
-O servidor estará disponível em `http://localhost:3000` (ou na porta configurada).
+O servidor estará disponível em `http://localhost:8080` (ou na porta configurada).
 
 ---
 
