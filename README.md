@@ -1,6 +1,6 @@
 # Projeto Quarta
 
-Um sistema simples de gerenciamento de concessionária de carros, desenvolvido em \[sua stack tecnológica aqui]. Este projeto permite cadastrar carros, clientes e registrar vendas, além de oferecer filtros específicos para consultas.
+Um sistema simples de gerenciamento de concessionária de carros. Este projeto permite cadastrar carros, clientes e registrar vendas, além de oferecer filtros específicos para consultas.
 
 ---
 
