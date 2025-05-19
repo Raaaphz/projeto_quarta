@@ -10,19 +10,19 @@ O **Projeto Quarta** foi criado com o objetivo de exercitar operações básicas
 
 **Principais funcionalidades:**
 
-* Cadastro de **carros** (modelo, ano, preço, etc.)
-* Cadastro de **clientes** (nome, CPF, contato, etc.)
-* Registro de **vendas** vinculando clientes a carros
-* Filtros e consultas específicas via endpoints GET
+- Cadastro de **carros** (modelo, ano, preço, etc.)
+- Cadastro de **clientes** (nome, CPF, contato, etc.)
+- Registro de **vendas** vinculando clientes a carros
+- Filtros e consultas específicas via endpoints GET
 
 ---
 
 ## Tecnologias
 
-* **Linguagem**: JavaScript
-* **Framework**: Express
-* **Banco de dados**: MySQL
-* Outras bibliotecas e ferramentas importantes
+- **Linguagem**: JavaScript
+- **Framework**: Express
+- **Banco de dados**: MySQL
+- Outras bibliotecas e ferramentas importantes
 
 ---
 
@@ -30,9 +30,9 @@ O **Projeto Quarta** foi criado com o objetivo de exercitar operações básicas
 
 Antes de começar, certifique-se de ter instalado em sua máquina:
 
-* [Node.js](https://nodejs.org/)
-* [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
-* Banco de dados configurado (caso não use in-memory ou SQLite)
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
+- Banco de dados configurado (caso não use in-memory ou SQLite)
 
 ---
 
@@ -48,7 +48,9 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 2. **Instale** as dependências:
 
    ```bash
-   npm install    # ou yarn install
+   npm install    # ou yarn install - para a API
+   cd frontend    # para mudar o terminal para a pasta da interface
+   npm install    # novamente, para os recursos da interface
    ```
 
 3. **Configure** variáveis de ambiente (se aplicável):
@@ -63,10 +65,12 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 4. **Execute** o servidor:
 
    ```bash
-   npm start      # ou yarn start
+   npm start      # ou yarn start - NA PASTA PRINCIPAL
+   npm run dev    # NA PASTA DA INTERFACE
    ```
 
-O servidor estará disponível em `http://localhost:8080` (ou na porta configurada).
+O servidor API estará disponível em `http://localhost:8080` (ou na porta configurada).
+A interface estará disponível em `http://localhost:5173` (ou na porta configurada).
 
 ---
 
