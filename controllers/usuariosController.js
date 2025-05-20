@@ -10,7 +10,7 @@ const cadastrarVendedor = async (req, res) => {
   const cargo = "Vendedor";
 
   try {
-    const checkUserQuery = "SELECT * FROM login WHERE usuario = ?";
+    const checkUserQuery = "SELECT * FROM usuarios WHERE usuario = ?";
     const [usuarioExistente] = await conexao.execute(checkUserQuery, [usuario]);
 
     if (usuarioExistente.length > 0) {
@@ -21,7 +21,7 @@ const cadastrarVendedor = async (req, res) => {
     const hashedPassword = await bcrypt.hash(senha, saltRounds);
 
     const insert =
-      "INSERT INTO login (usuario, cargo,  senha) VALUES (?, ?, ?)";
+      "INSERT INTO usuarios (usuario, cargo,  senha) VALUES (?, ?, ?)";
     await conexao.execute(insert, [usuario, cargo, hashedPassword]);
 
     res.status(201).json({ message: "Usuario cadastrado com sucesso" });
@@ -35,7 +35,7 @@ const login = async (req, res) => {
   const { usuario, senha } = req.body;
 
   try {
-    const checkUserQuery = "SELECT * FROM login WHERE usuario = ?";
+    const checkUserQuery = "SELECT * FROM usuarios WHERE usuario = ?";
     const [usuarioExistente] = await conexao.execute(checkUserQuery, [usuario]);
 
     if (usuarioExistente.length === 0) {
@@ -98,7 +98,7 @@ const usuarioLogado = async (req, res) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const checkUserQuery = "SELECT * FROM login WHERE usuario = ?";
+    const checkUserQuery = "SELECT * FROM usuarios WHERE usuario = ?";
     const [usuarioExistente] = await conexao.execute(checkUserQuery, [
       decoded.usuario,
     ]);
@@ -124,7 +124,7 @@ const updateUsuario = async (req, res) => {
       hashedPassword = await bcrypt.hash(senha, saltRounds);
     }
 
-    const query = "UPDATE login SET usuario = ? WHERE iduser = ?";
+    const query = "UPDATE usuarios SET usuario = ? WHERE iduser = ?";
     const params = [usuario, iduser];
 
     const [result] = await conexao.execute(query, params);
@@ -133,7 +133,7 @@ const updateUsuario = async (req, res) => {
       return res.status(404).json({ error: "Usuario não encontrado: ", error });
     }
 
-    const getUser = "SELECT * FROM login WHERE iduser = ?";
+    const getUser = "SELECT * FROM usuarios WHERE iduser = ?";
     const [userResult] = await conexao.execute(getUser, [iduser]);
 
     res.status(200).json({
@@ -150,7 +150,7 @@ const deletarUsuario = async (req, res) => {
   const iduser = req.params;
 
   try {
-    const deleteQuery = "DELETE FROM login WHERE iduser = ?";
+    const deleteQuery = "DELETE FROM usuarios WHERE iduser = ?";
     const [result] = await conexao.execute(deleteQuery, [iduser]);
 
     if (result.affectedRows === 0) {
@@ -166,7 +166,7 @@ const deletarUsuario = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const query = "SELECT * FROM login";
+    const query = "SELECT * FROM usuarios";
     const [rows] = await conexao.execute(query);
     res.status(200).json(rows);
   } catch (error) {
