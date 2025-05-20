@@ -65,7 +65,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 4. **Execute** o servidor:
 
    ```bash
-   npm start      # ou yarn start - NA PASTA PRINCIPAL
+   node app.js     # ou yarn start - NA PASTA PRINCIPAL
    npm run dev    # NA PASTA DA INTERFACE
    ```
 
