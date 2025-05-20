@@ -4,16 +4,16 @@ const router = express.Router();
 const clientesController = require("../controllers/clientesController");
 
 router.get("/visualizarclientes", clientesController.get);
-router.post('/cadastrarclientes/', clientesController.post);
-router.delete('/deletarclientes/:cpf', clientesController.delete);
-router.put('/updateclientes/:cpf', clientesController.put);
+router.post("/cadastrarclientes/", clientesController.post);
+router.delete("/deletarclientes/:cpf", clientesController.delete);
+router.put("/updateclientes/:cpf", clientesController.put);
 
 const {
-    getPorCPF,
-    getPorNome,
-} = require ('../controllers/getClientesEspecificadoController');
+  getPorCPF,
+  getPorNome,
+} = require("../controllers/getClientesEspecificadoController");
 
-router.get('/clienteporcpf/:cpf', getPorCPF);
-router.get('/clientepornome/:nome', getPorNome);
+router.get("/clienteporcpf/:cpf", getPorCPF);
+router.get("/clientepornome/:nome", getPorNome);
 
 module.exports = router;

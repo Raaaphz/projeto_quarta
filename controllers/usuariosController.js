@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { generateToken, setCookieToken } = require("../utils/tokenUtils");
 const { json } = require("express");
+const { patch } = require("../routes/carros");
 
 const cadastrarVendedor = async (req, res) => {
   const { usuario, senha } = req.body;
@@ -47,6 +48,24 @@ const login = async (req, res) => {
     if (!senhaValida) {
       return res.status(401).json({ error: "Senha incorreta" });
     }
+
+    const token = generateToken(user);
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+      patch: "/",
+      maxAge: 24 * 60 * 60 * 1000,
+    };
+
+    res.cookie("auth_token", token, cookieOptions);
+
+    res.status(200).json({
+      id: user.iduser,
+      usuario: user.usuario,
+      cargo: user.cargo,
+    });
   } catch (error) {
     console.error("Erro no login: ", error);
     res.status(500).json({ error: "Erro no login" });
