@@ -1,9 +1,9 @@
-const conexao = require("../db");
+import conexao from '../db.js';
 
 // Função para validar CPF
 function validarCPF(cpf) {
   // Remove todos os caracteres que não são números (ex: pontos, traços)
-  cpf = cpf.replace(/[^\d]+/g, "");
+  cpf = cpf.replace(/[^\d]+/g, '');
 
   // Verifica se o CPF tem 11 dígitos ou se todos os dígitos são iguais (o que é inválido)
   if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
@@ -39,102 +39,91 @@ function validarCPF(cpf) {
   return resto === parseInt(cpf.charAt(10));
 }
 
-module.exports = {
-  get: async (req, res) => {
-    try {
-      const query = "SELECT * FROM clientes";
-      const [rows] = await conexao.execute(query);
+export const get = async (req, res) => {
+  try {
+    const query = 'SELECT * FROM clientes';
+    const [rows] = await conexao.execute(query);
 
-      res.status(200).json(rows);
-    } catch (error) {
-      console.error("Erro ao buscar clientes: ", error);
-      res.status(500).json({ error: "Erro ao buscar clientes" });
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error('Erro ao buscar clientes: ', error);
+    res.status(500).json({ error: 'Erro ao buscar clientes' });
+  }
+};
+
+export const post = async (req, res) => {
+  let { nome, sobrenome, nascimento, logradouro, bairro, cep, cpf } = req.body;
+
+  // Converter o nome para letras minúsculas
+  nome = nome.toLowerCase();
+
+  // Validação do CPF
+  if (!validarCPF(cpf)) {
+    return res.status(400).json({ error: 'CPF inválido' });
+  }
+
+  try {
+    const checkCPFquery = 'SELECT * FROM clientes WHERE cpf = ?';
+    const [CPFExistente] = await conexao.execute(checkCPFquery, [cpf]);
+
+    if (CPFExistente.length > 0) {
+      return res.status(400).json({ error: 'CPF ja cadastrado' });
     }
-  },
 
-  post: async (req, res) => {
-    let { nome, sobrenome, nascimento, logradouro, bairro, cep, cpf } =
-      req.body;
+    // Inserir dados do cliente
+    const insert =
+      'INSERT INTO clientes (nome, sobrenome, nascimento, logradouro, bairro, cep, cpf) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    await conexao.execute(insert, [nome, sobrenome, nascimento, logradouro, bairro, cep, cpf]);
 
-    // Converter o nome para letras minúsculas
-    nome = nome.toLowerCase();
+    res.status(201).json({ message: 'Cliente cadastrado com sucesso' });
+  } catch (error) {
+    console.error('Erro ao cadastrar cliente: ', error);
+    res.status(500).json({ error: 'Erro ao cadastrar cliente' });
+  }
+};
 
-    // Validação do CPF
-    if (!validarCPF(cpf)) {
-      return res.status(400).json({ error: "CPF inválido" });
+export const del = async (req, res) => {
+  const { cpf } = req.params;
+
+  try {
+    const deleteQuery = 'DELETE FROM clientes WHERE cpf = ?';
+    const [result] = await conexao.execute(deleteQuery, [cpf]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Cliente não encontrado' });
     }
 
-    try {
-      const checkCPFquery = "SELECT * FROM clientes WHERE cpf = ?";
-      const [CPFExistente] = await conexao.execute(checkCPFquery, [cpf]);
+    res.status(200).json({ message: 'Cliente deletado com sucesso' });
+  } catch (error) {
+    console.error('Erro ao deletar cliente:', error);
+    res.status(500).json({ error: 'Erro ao deletar cliente' });
+  }
+};
 
-      if (CPFExistente.length > 0) {
-        return res.status(400).json({ error: "CPF ja cadastrado" });
-      }
+export const put = async (req, res) => {
+  const { cpf } = req.params;
+  const { nome, sobrenome, nascimento, logradouro, bairro, cep } = req.body;
 
-      // Inserir dados do cliente
-      const insert =
-        "INSERT INTO clientes (nome, sobrenome, nascimento, logradouro, bairro, cep, cpf) VALUES (?, ?, ?, ?, ?, ?, ?)";
-      await conexao.execute(insert, [
-        nome,
-        sobrenome,
-        nascimento,
-        logradouro,
-        bairro,
-        cep,
-        cpf,
-      ]);
+  try {
+    const updateQuery =
+      'UPDATE clientes SET nome = ?, sobrenome = ?, nascimento = ?, logradouro = ?, bairro = ?, cep = ? WHERE cpf = ?';
+    const [result] = await conexao.execute(updateQuery, [
+      nome,
+      sobrenome,
+      nascimento,
+      logradouro,
+      bairro,
+      cep,
+      cpf,
+    ]);
 
-      res.status(201).json({ message: "Cliente cadastrado com sucesso" });
-    } catch (error) {
-      console.error("Erro ao cadastrar cliente: ", error);
-      res.status(500).json({ error: "Erro ao cadastrar cliente" });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Cliente não encontrado' });
     }
-  },
 
-  delete: async (req, res) => {
-    const { cpf } = req.params;
-
-    try {
-      const deleteQuery = "DELETE FROM clientes WHERE cpf = ?";
-      const [result] = await conexao.execute(deleteQuery, [cpf]);
-
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ error: "Cliente não encontrado" });
-      }
-
-      res.status(200).json({ message: "Cliente deletado com sucesso" });
-    } catch (error) {
-      console.error("Erro ao deletar cliente:", error);
-      res.status(500).json({ error: "Erro ao deletar cliente" });
-    }
-  },
-
-  put: async (req, res) => {
-    const { cpf } = req.params;
-    const { nome, sobrenome, nascimento, logradouro, bairro, cep } = req.body;
-
-    try {
-      const updateQuery =
-        "UPDATE clientes SET nome = ?, sobrenome = ?, nascimento = ?, logradouro = ?, bairro = ?, cep = ? WHERE cpf = ?";
-      const [result] = await conexao.execute(updateQuery, [
-        nome,
-        sobrenome,
-        nascimento,
-        logradouro,
-        bairro,
-        cep,
-        cpf,
-      ]);
-
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ error: "Cliente não encontrado" });
-      }
-
-      res.status(200).json({ message: "Cliente atualizado com sucesso" });
-    } catch (error) {
-      console.error("Erro ao atualizar cliente:", error);
-      res.status(500).json({ error: "Erro ao atualizar cliente" });
-    }
-  },
+    res.status(200).json({ message: 'Cliente atualizado com sucesso' });
+  } catch (error) {
+    console.error('Erro ao atualizar cliente:', error);
+    res.status(500).json({ error: 'Erro ao atualizar cliente' });
+  }
 };

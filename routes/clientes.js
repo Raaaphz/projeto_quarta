@@ -1,19 +1,15 @@
-const express = require("express");
+import express from 'express';
+import * as clientesController from '../controllers/clientesController.js';
+import { getPorCPF, getPorNome } from '../controllers/getClientesEspecificadoController.js';
+
 const router = express.Router();
 
-const clientesController = require("../controllers/clientesController");
+router.get('/visualizarcliente', clientesController.get);
+router.post('/cadastrarcliente', clientesController.post);
+router.delete('/deletarcliente/:cpf', clientesController.del); // Changed from delete to del
+router.put('/updatecliente/:cpf', clientesController.put);
 
-router.get("/visualizarclientes", clientesController.get);
-router.post("/cadastrarclientes/", clientesController.post);
-router.delete("/deletarclientes/:cpf", clientesController.delete);
-router.put("/updateclientes/:cpf", clientesController.put);
+router.get('/clienteporcpf/:cpf', getPorCPF);
+router.get('/clientepornome/:nome', getPorNome);
 
-const {
-  getPorCPF,
-  getPorNome,
-} = require("../controllers/getClientesEspecificadoController");
-
-router.get("/clienteporcpf/:cpf", getPorCPF);
-router.get("/clientepornome/:nome", getPorNome);
-
-module.exports = router;
+export default router;

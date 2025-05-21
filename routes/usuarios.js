@@ -1,8 +1,6 @@
-const express = require("express");
-const router = express.Router();
-
-const { verificarToken } = require("../utils/tokenUtils");
-const {
+import express from 'express';
+import { verificarToken } from '../utils/tokenUtils.js';
+import {
   cadastrarVendedor,
   login,
   logout,
@@ -10,14 +8,16 @@ const {
   updateUsuario,
   deletarUsuario,
   getUser,
-} = require("../controllers/usuariosController");
+} from '../controllers/usuariosController.js';
 
-router.post("/cadastrarvendedor", cadastrarVendedor);
-router.post("/logar", login);
-router.get("/logout", logout);
-router.get("/usuariologado", verificarToken, usuarioLogado);
-router.put("/atualizarusuario/:iduser", verificarToken, updateUsuario);
-router.delete("/deletarusuario/:iduser,", verificarToken, deletarUsuario);
-router.get("/listauser", verificarToken, getUser);
+const router = express.Router();
 
-module.exports = router;
+router.post('/cadastrarvendedor', cadastrarVendedor);
+router.post('/logar', login);
+router.get('/logout', logout);
+router.get('/usuariologado', verificarToken, usuarioLogado);
+router.put('/atualizarusuario/:iduser', verificarToken, updateUsuario);
+router.delete('/deletarusuario/:iduser,', verificarToken, deletarUsuario);
+router.get('/listauser', verificarToken, getUser);
+
+export default router;
