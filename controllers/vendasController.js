@@ -12,22 +12,22 @@ const getVenda = async (req, res) => {
   }
 };
 
-const vendaPorDia = async (req, res) => {
-  let { diavenda } = req.params;
+const vendaPorVendedor = async (req, res) => {
+  const vendedor = req.params;
 
   try {
-    const query = "SELECT * FROM vendas WHERE diavenda = ?";
-    const [rows] = await conexao.execute(query, [diavenda]);
+    const query = "SELECT * FROM vendas WHERE vendedor = ?";
+    const [rows] = await conexao.execute(query, [vendedor]);
 
     res.status(200).json(rows);
   } catch (error) {
-    console.error("Erro ao buscar venda: ", error);
+    console.error("Erro ao buscar venda:", error);
     res.status(500).json({ error: "Erro ao buscar venda" });
   }
 };
 
 const vendaCarro = async (req, res) => {
-  let { valor, diavenda, cpf } = req.body;
+  const { valor, diavenda, cpf } = req.body; //alterando let pra const (acho q nao quebra)
   const vendido = "S";
   let { placa } = req.params;
   placa = placa.toUpperCase();
@@ -64,8 +64,8 @@ const vendaCarro = async (req, res) => {
 
     // Inserir venda
     const vendaQuery =
-      "INSERT INTO vendas (valor, diavenda, cpf, placa) VALUES (?, ?, ?, ?)";
-    await conexao.execute(vendaQuery, [valor, diavenda, cpf, placa]);
+      "INSERT INTO vendas (valor, diavenda, cpf, placa, vendedor) VALUES (?, ?, ?, ?, ?)";
+    await conexao.execute(vendaQuery, [valor, diavenda, cpf, placa, vendedor]);
 
     // Atualizar como vendido
     const vendidoQuery = "UPDATE carros SET vendido = ? WHERE UPPER(placa) = ?";
@@ -98,11 +98,11 @@ const deletarVendas = async (req, res) => {
 
 const updateVendas = async (req, res) => {
   const idvenda = req.params; //alterando let pra const (acho q nao quebra)
-  const { valor, diavenda, cpf, placa } = req.body;
+  const { valor, diavenda, cpf, placa, vendedor } = req.body;
   try {
     const query =
-      "UPDATE vendas SET valor = ?, diavenda = ?, cpf = ?, placa = ? WHERE idvenda = ?";
-    const params = [valor, diavenda, cpf, placa, idvenda];
+      "UPDATE vendas SET valor = ?, diavenda = ?, cpf = ?, placa = ?, vendedor = ? WHERE idvenda = ?";
+    const params = [valor, diavenda, cpf, placa, idvenda, vendedor];
 
     const [result] = await conexao.execute(query, params);
 
@@ -126,7 +126,7 @@ const updateVendas = async (req, res) => {
 module.exports = {
   vendaCarro,
   getVenda,
-  vendaPorDia,
+  vendaPorVendedor,
   deletarVendas,
   updateVendas,
 };

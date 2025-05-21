@@ -14,6 +14,20 @@ const getPorPlaca = async (req, res) => {
   }
 };
 
+const getPorKM = async (req, res) => {
+  const { km } = req.params;
+
+  try {
+    const getQuery = "SELECT * FROM carros WHERE km = ?";
+    const [rows] = await conexao.execute(getQuery, [km]);
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Erro ao buscar carro: ", error);
+    res.status(500).json({ error: "Erro ao buscar carro" });
+  }
+};
+
 const getPorModelo = async (req, res) => {
   const { modelo } = req.params;
 
@@ -88,6 +102,7 @@ module.exports = {
   getPorCor,
   getPorMarca,
   getPorModelo,
+  getPorKM,
   getPorPlaca,
   getPorValor,
   getVendidos,

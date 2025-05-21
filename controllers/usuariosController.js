@@ -1,9 +1,7 @@
 const conexao = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { generateToken, setCookieToken } = require("../utils/tokenUtils");
-const { json } = require("express");
-const { patch } = require("../routes/carros");
+const { generateToken } = require("../utils/tokenUtils");
 
 const cadastrarVendedor = async (req, res) => {
   const { usuario, senha } = req.body;
@@ -118,12 +116,6 @@ const updateUsuario = async (req, res) => {
   const usuario = req.body;
 
   try {
-    let hashedPassword;
-    if (senha) {
-      const saltRounds = 10;
-      hashedPassword = await bcrypt.hash(senha, saltRounds);
-    }
-
     const query = "UPDATE usuarios SET usuario = ? WHERE iduser = ?";
     const params = [usuario, iduser];
 

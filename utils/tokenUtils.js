@@ -12,16 +12,6 @@ const generateToken = (user) => {
   );
 };
 
-const setCookieToken = (res, token) => {
-  res.cookie("auth_token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 24 * 60 * 60 * 1000,
-    sameSite: "lax",
-    path: "/",
-  });
-};
-
 const verificarToken = (req, res, next) => {
   const token = req.cookie.auth_token;
 

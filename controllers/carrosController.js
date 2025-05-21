@@ -14,7 +14,7 @@ module.exports = {
   },
 
   post: async (req, res) => {
-    const { marca, modelo, ano, cor, valor, placa } = req.body;
+    const { marca, modelo, ano, cor, valor, placa, km } = req.body;
     const vendido = "N";
 
     const placaNormalizada = placa.toUpperCase();
@@ -30,7 +30,7 @@ module.exports = {
       }
 
       const insert =
-        "INSERT INTO carros (marca, modelo, ano, placa, cor, valor, vendido) VALUES (?,?,?,?,?,?,?)";
+        "INSERT INTO carros (marca, modelo, ano, placa, cor, valor, vendido, km) VALUES (?,?,?,?,?,?,?,?)";
       await conexao.execute(insert, [
         marca,
         modelo,
@@ -39,6 +39,7 @@ module.exports = {
         cor,
         valor,
         vendido,
+        km,
       ]);
 
       res.status(201).json({ message: "Carro cadastrado com sucesso" });
@@ -70,12 +71,12 @@ module.exports = {
   put: async (req, res) => {
     let { placa } = req.params;
     placa = placa.toUpperCase();
-    const { marca, modelo, ano, cor, valor } = req.body;
+    const { marca, modelo, ano, cor, valor, km } = req.body;
 
     try {
       const query =
-        "UPDATE carros SET marca = ?, modelo = ?, ano = ?, cor = ?, valor = ? WHERE UPPER(placa) = ?";
-      const params = [marca, modelo, ano, cor, valor];
+        "UPDATE carros SET marca = ?, modelo = ?, ano = ?, cor = ?, valor = ?, km = ? WHERE UPPER(placa) = ?";
+      const params = [marca, modelo, ano, cor, valor, km];
 
       const [result] = await conexao.execute(query, params);
 
