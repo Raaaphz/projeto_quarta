@@ -76,7 +76,7 @@ A interface estará disponível em `http://localhost:5173` (ou na porta configur
 
 ## Integrantes
 
-- Diego
+- Diego Carvalho Rodrigues
 - Gabriel Gebra Tardivo
 - Lucas Pomini Galli
 - Raphael Camurri Michelassi
