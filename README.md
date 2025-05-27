@@ -22,6 +22,7 @@ O **Projeto Quarta** foi criado com o objetivo de exercitar operações básicas
 - **Linguagem**: JavaScript
 - **Framework**: Express
 - **Banco de dados**: MySQL
+- **Containerização**: Docker
 - Outras bibliotecas e ferramentas importantes
 
 ---
