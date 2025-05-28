@@ -6,7 +6,7 @@ import cors from 'cors';
 
 //inicialização
 const app = express();
-const PORT = 8081;
+const PORT = 8080;
 
 // Middleware para interpretar JSON
 app.use(express.json());
