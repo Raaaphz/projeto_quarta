@@ -74,6 +74,12 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
    npm run dev    # NA PASTA DA INTERFACE
    ```
 
+5. **Execute** os Containers do configurados no Docker:
+
+   ```bash
+   docker compose up --build
+   ```
+
 O servidor API estará disponível em `http://localhost:8080` (ou na porta configurada).
 A interface estará disponível em `http://localhost:5173` (ou na porta configurada).
 
