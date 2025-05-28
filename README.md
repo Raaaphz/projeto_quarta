@@ -22,6 +22,7 @@ O **Projeto Quarta** foi criado com o objetivo de exercitar operações básicas
 - **Linguagem**: JavaScript
 - **Framework**: Express
 - **Banco de dados**: MySQL
+- **Containerização**: Docker
 - Outras bibliotecas e ferramentas importantes
 
 ---
@@ -48,7 +49,11 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 2. **Instale** as dependências:
 
    ```bash
-   npm install    # ou yarn install - para a API
+   cd backend
+   npm install # ou yarn install - para a API
+   
+   cd ..
+       
    cd frontend    # para mudar o terminal para a pasta da interface
    npm install    # novamente, para os recursos da interface
    ```
@@ -67,6 +72,12 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
    ```bash
    node app.js     # ou yarn start - NA PASTA PRINCIPAL
    npm run dev    # NA PASTA DA INTERFACE
+   ```
+
+5. **Execute** os Containers configurados no Docker:
+
+   ```bash
+   docker compose up --build
    ```
 
 O servidor API estará disponível em `http://localhost:8080` (ou na porta configurada).

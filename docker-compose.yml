@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - database.env
+    ports:
+      - '8080:8080'
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    # apenas monta .env para leitura em tempo de container (não é usado em runtime,
+    # mas garante que o arquivo esteja presente se você precisar)
+    env_file:
+      - ./frontend/.env
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+    restart: unless-stopped
