@@ -1,13 +1,16 @@
 //importações
 import express from 'express';
 import supabase from './db.js';
+import listRoutes from 'express-list-routes';
+import cors from 'cors';
 
 //inicialização
 const app = express();
-const PORT = 8080;
+const PORT = 8081;
 
 // Middleware para interpretar JSON
 app.use(express.json());
+app.use(cors());
 
 // Convert require statements to imports
 import carrosRoute from './routes/carros.js';
@@ -44,6 +47,8 @@ app.get('/health', async (req, res) => {
     });
   }
 });
+
+// listRoutes(app);
 
 // Update server startup check
 app.listen(PORT, async () => {

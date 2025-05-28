@@ -44,4 +44,6 @@ const getSupabaseClient = async () => {
 
 // Export initialized client
 const supabase = await getSupabaseClient();
+
+console.log({ supabase })
 export default supabase;
