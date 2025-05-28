@@ -13,8 +13,8 @@ import { useTheme } from "@/components/theme-context"
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    usuario: "",
+    senha: "",
   })
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -28,7 +28,7 @@ export default function LoginPage() {
     setIsLoading(true)
     setError("")
 
-    const success = await login(formData.username, formData.password)
+    const success = await login(formData.usuario, formData.senha)
 
     if (!success) {
       setError("Credenciais inválidas. Tente novamente.")
@@ -67,14 +67,14 @@ export default function LoginPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="username" className="text-foreground">
+                <Label htmlFor="usuario" className="text-foreground">
                   Usuário
                 </Label>
                 <Input
-                  id="username"
+                  id="usuario"
                   type="text"
-                  value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  value={formData.usuario}
+                  onChange={(e) => setFormData({ ...formData, usuario: e.target.value })}
                   className="bg-input border-border text-foreground placeholder-muted-foreground"
                   placeholder="Digite seu usuário"
                   required
@@ -87,10 +87,10 @@ export default function LoginPage() {
                 </Label>
                 <div className="relative">
                   <Input
-                    id="password"
+                    id="senha"
                     type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    value={formData.senha}
+                    onChange={(e) => setFormData({ ...formData, senha: e.target.value })}
                     className="bg-input border-border text-foreground placeholder-muted-foreground pr-10"
                     placeholder="Digite sua senha"
                     required
