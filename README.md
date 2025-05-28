@@ -74,7 +74,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
    npm run dev    # NA PASTA DA INTERFACE
    ```
 
-5. **Execute** os Containers do configurados no Docker:
+5. **Execute** os Containers configurados no Docker:
 
    ```bash
    docker compose up --build
