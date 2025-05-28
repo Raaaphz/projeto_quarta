@@ -49,7 +49,11 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 2. **Instale** as dependências:
 
    ```bash
-   npm install    # ou yarn install - para a API
+   cd backend
+   npm install # ou yarn install - para a API
+   
+   cd ..
+       
    cd frontend    # para mudar o terminal para a pasta da interface
    npm install    # novamente, para os recursos da interface
    ```
