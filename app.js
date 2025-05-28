@@ -10,6 +10,7 @@ const PORT = 8081;
 
 // Middleware para interpretar JSON
 app.use(express.json());
+app.use(cors());
 
 // Convert require statements to imports
 import carrosRoute from './routes/carros.js';
@@ -47,10 +48,7 @@ app.get('/health', async (req, res) => {
   }
 });
 
-listRoutes(app);
-app.use(cors({
-  origin: 'http://localhost:3000' // frontend Next.js
-}));
+// listRoutes(app);
 
 // Update server startup check
 app.listen(PORT, async () => {

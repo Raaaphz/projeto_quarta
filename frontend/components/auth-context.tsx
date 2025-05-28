@@ -1,5 +1,6 @@
 "use client"
 
+import api from "@/lib/api"
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 
 interface User {
@@ -34,41 +35,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      // Verificar credenciais de teste
-      if (username === "adm" && password === "adm") {
-        const testUser = {
-          id: 1,
-          username: "adm",
-          name: "Administrador",
-        }
+    const response = await api.post('/usuarios/logar', 
+      { username, password },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
-        setIsAuthenticated(true)
-        setUser(testUser)
-        localStorage.setItem("auth_token", "test_token")
-        localStorage.setItem("user_data", JSON.stringify(testUser))
-        return true
-      }
+    // Axios não tem response.ok, mas se chegou aqui, status está OK (2xx)
+    // A resposta já está em response.data
+    const data = response.data;
 
-      // Chamada real para API (descomentada quando backend estiver pronto)
-      // const response = await fetch('/api/auth/login', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ username, password })
-      // })
+    setIsAuthenticated(true);
+    setUser(data);
+    localStorage.setItem("auth_token", data.token);
+    localStorage.setItem("user_data", JSON.stringify(data));
 
-      // if (response.ok) {
-      //   const data = await response.json()
-      //   setIsAuthenticated(true)
-      //   setUser(data.user)
-      //   localStorage.setItem("auth_token", data.token)
-      //   localStorage.setItem("user_data", JSON.stringify(data.user))
-      //   return true
-      // }
-
-      return false
+    return true;
     } catch (error) {
-      console.error("Erro no login:", error)
-      return false
+      // Trata erro, exibe mensagem, etc.
+      setIsAuthenticated(false);
+      setUser(null);
+      return false;
     }
   }
 

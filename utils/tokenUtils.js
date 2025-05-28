@@ -1,13 +1,15 @@
 import jwt from 'jsonwebtoken';
 
+const JWT_SECRET = "minhaSuperChaveSecretaJWT1234567890!";
+
 export const generateToken = (user) => {
   return jwt.sign(
     {
-      id: user.iduser,
+      id: user.id,
       usuario: user.usuario,
       cargo: user.cargo,
     },
-    process.env.JWT_SECRET,
+    JWT_SECRET,
     { expiresIn: '24h' }
   );
 };
@@ -20,7 +22,7 @@ export const verificarToken = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
